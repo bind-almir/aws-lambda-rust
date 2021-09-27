@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "serverless": "^2.6.0",
+    "serverless-deployment-bucket": "^1.5.1",
+    "serverless-rust": "https://github.com/bind-almir/serverless-rust.git#dev"
+  },
+  "name": "aws-lambda-rust"
+}

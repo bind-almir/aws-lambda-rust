@@ -1,0 +1,2 @@
+[workspace]
+members = ["./api/create", "./api/read", "./api/update", "./api/delete"]

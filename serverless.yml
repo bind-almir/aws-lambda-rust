@@ -1,0 +1,62 @@
+service: aws-lambda-rust
+frameworkVersion: '2'
+variablesResolutionMode: 20210326
+
+provider:
+  name: aws
+  runtime: rust
+  memorySize: 128
+  stage: dev
+  region: eu-west-1
+  lambdaHashingVersion: 20201221
+  deploymentBucket:
+    name: serverless-deployment-bucket-${self:custom.accountId}
+    serverSideEncryption: AES256
+  iam:
+    role:
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+
+custom:
+  accountId: ${aws:accountId}
+
+plugins:
+  - serverless-rust
+  - serverless-deployment-bucket
+
+package:
+  individually: true
+
+functions:
+
+  create:
+    handler: create
+    events:
+      - http:
+          path: /dynamo
+          method: post
+          cors: true
+
+  read:
+    handler: read
+    events:
+      - http:
+          path: /dynamo/{id}
+          method: get
+          cors: true
+
+  update:
+    handler: update
+    events:
+      - http:
+          path: /dynamo
+          method: put
+          cors: true
+
+  delete:
+    handler: delete
+    events:
+      - http:
+          path: /dynamo/{id}
+          method: delete
+          cors: true
